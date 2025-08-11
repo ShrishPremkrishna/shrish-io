@@ -22,7 +22,7 @@ body {
 
 .site-header {
   position: sticky; top: 0; z-index: 10;
-  background: rgba(11, 16, 32, 0.7);
+  background: rgba(5, 0, 7, 0.7);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
@@ -37,7 +37,7 @@ body {
 .lead { color: var(--muted); font-size: 18px; max-width: 700px; }
 .cta { margin-top: 24px; display: flex; gap: 12px; }
 .button { display: inline-block; padding: 10px 16px; border: 1px solid var(--border); border-radius: 10px; color: #e2e8f0; text-decoration: none; background: rgba(255,255,255,0.02);} 
-.button:hover { border-color: #334155; background: rgba(255,255,255,0.04);} 
+.button:hover { border-color: #3b2754; background: rgba(255,255,255,0.04);} 
 .button.primary { 
   background: linear-gradient(180deg, #7c3aed, #b026ff);
   border: none;
