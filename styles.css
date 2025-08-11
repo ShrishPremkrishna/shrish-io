@@ -1,11 +1,11 @@
 :root {
-  --bg: #0b1020;
-  --panel: #0f172a;
-  --text: #e5e7eb;
-  --muted: #94a3b8;
-  --accent: #60a5fa;
-  --link: #a5b4fc;
-  --border: #1f2937;
+  --bg: #050007;
+  --panel: #0b0b12;
+  --text: #f5f3ff;
+  --muted: #a78bfa;
+  --accent: #b026ff;
+  --link: #c084fc;
+  --border: #241a36;
 }
 
 * { box-sizing: border-box; }
@@ -13,7 +13,7 @@ html, body { height: 100%; }
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  background: linear-gradient(180deg, var(--bg), #0d1326 35%, #0b132a 100%);
+  background: linear-gradient(180deg, var(--bg), #0b0018 35%, #0d0020 100%);
   color: var(--text);
   line-height: 1.6;
 }
@@ -38,17 +38,24 @@ body {
 .cta { margin-top: 24px; display: flex; gap: 12px; }
 .button { display: inline-block; padding: 10px 16px; border: 1px solid var(--border); border-radius: 10px; color: #e2e8f0; text-decoration: none; background: rgba(255,255,255,0.02);} 
 .button:hover { border-color: #334155; background: rgba(255,255,255,0.04);} 
-.button.primary { background: linear-gradient(180deg, #1d4ed8, #1e40af); border: none; }
-.button.primary:hover { filter: brightness(1.05); }
+.button.primary { 
+  background: linear-gradient(180deg, #7c3aed, #b026ff);
+  border: none;
+  box-shadow: 0 0 16px rgba(176, 38, 255, 0.45), inset 0 0 10px rgba(255,255,255,0.06);
+}
+.button.primary:hover { 
+  filter: brightness(1.05);
+  box-shadow: 0 0 24px rgba(176, 38, 255, 0.6), inset 0 0 12px rgba(255,255,255,0.08);
+}
 
 .section { padding: 64px 0; }
-.section.alt { background: radial-gradient(1200px 400px at 50% -50px, rgba(96,165,250,0.08), transparent 60%), transparent; }
+.section.alt { background: radial-gradient(1200px 400px at 50% -50px, rgba(176, 38, 255, 0.12), transparent 60%), transparent; }
 .two-col { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: start; }
 .card { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-radius: 14px; }
 .muted { color: var(--muted); }
 .checks { list-style: none; padding: 0; margin: 10px 0 0; }
 .checks li { position: relative; padding-left: 24px; margin: 10px 0; }
-.checks li::before { content: "✓"; position: absolute; left: 0; color: #22c55e; }
+.checks li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .project { background: var(--panel); border: 1px solid var(--border); padding: 18px; border-radius: 14px; }
