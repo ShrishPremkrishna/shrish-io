@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Monogram from '../components/Monogram.astro';
+---
+<Base title="Shrish Premkrishna — Full Stack AI Engineer" description="Portfolio of Shrish Premkrishna — projects, experience, awards, and press.">
+  <Nav />
+  <main>
+    <section class="relative grain">
+      <div class="max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h1 class="font-display text-5xl md:text-6xl leading-tight text-forest">Shrish Premkrishna</h1>
+          <p class="mt-3 text-lg text-forest/80">Full Stack AI Engineer · Co‑founder, building Beatify</p>
+          <div class="mt-6 flex gap-3">
+            <a href="/projects/beatify" class="px-4 py-2 rounded-md bg-palegold text-ink shadow-soft hover:shadow-glow">View Beatify</a>
+            <a href="/projects" class="px-4 py-2 rounded-md border border-border text-forest hover:bg-sage/40">All projects</a>
+          </div>
+          <div class="mt-6 text-forest/70 text-sm">Now: The AI powered social network directly connecting artists and producers.</div>
+        </div>
+        <div class="flex justify-center md:justify-end">
+          <Monogram size={140} />
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>
+
+

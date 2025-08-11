@@ -1,0 +1,24 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/experience', label: 'Experience' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/awards', label: 'Awards' },
+  { href: '/press', label: 'Press' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+<header class="sticky top-0 z-50 bg-ivory/80 backdrop-blur border-b border-border">
+  <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="/" class="font-display text-xl">Shrish</a>
+    <ul class="flex gap-5 text-sm">
+      {links.map((l) => (
+        <li><a class="text-forest/80 hover:text-forest" href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+  </header>
+
+

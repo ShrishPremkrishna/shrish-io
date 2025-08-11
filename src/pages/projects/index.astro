@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+
+const ordered = [
+  'beatify',
+  'arnold',
+  'wendy',
+  'shitpost-startups',
+  'heat-mapping-pipeline',
+  'smartsort',
+  'alzheimers-dl',
+  'shoe-stacker',
+];
+---
+<Base title="Projects — Shrish">
+  <Nav />
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="font-display text-4xl text-forest">Projects</h1>
+    <p class="mt-3 text-forest/80">Case studies with placeholders; links to be added later.</p>
+    <ul class="mt-6 grid md:grid-cols-2 gap-6">
+      {ordered.map((slug) => (
+        <li class="p-5 rounded-lg bg-ivory border border-border hover:shadow-soft"><a href={`/projects/${slug}`} class="text-forest">{slug.replaceAll('-', ' ')}</a></li>
+      ))}
+    </ul>
+  </main>
+</Base>
+
+
