@@ -1,10 +1,10 @@
 ---
 // Using Wikimedia Cool S with attribution (CC BY-SA 4.0)
 // https://commons.wikimedia.org/wiki/File:Cool_S.svg
-const size = Astro.props.size ?? 96;
+const { size = 96, rotate = 0 } = Astro.props as { size?: number; rotate?: number };
 ---
-<div class="relative" style={`width:${size}px;height:${size}px`}>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Cool%5FS.svg" alt="Cool S" class="w-full h-full object-contain" />
+<div class="relative" style={`width:${size}px;height:${size}px;transform:rotate(${rotate}deg);transform-origin:center;`}>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Cool%5FS.svg" alt="Cool S" class="w-full h-full object-contain select-none" draggable="false" />
   <p class="sr-only">Artwork © RootOfAllLight, CC BY-SA 4.0</p>
 </div>
 
