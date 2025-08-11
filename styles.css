@@ -63,6 +63,8 @@ body {
 .project-links { display: flex; gap: 12px; }
 .project a { color: var(--link); text-decoration: none; }
 .project a:hover { text-decoration: underline; }
+/* Blog */
+.blog-empty { margin-top: 8px; }
 
 .contact-list { list-style: none; padding: 0; display: flex; gap: 16px; }
 .contact-list a { color: var(--link); text-decoration: none; }
