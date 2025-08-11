@@ -12,7 +12,12 @@ const links = [
 ---
 <header class="sticky top-0 z-50 bg-ivory/80 backdrop-blur border-b border-border">
   <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="/" class="font-display text-xl">Shrish</a>
+    <a href="/" class="inline-flex items-center justify-center h-9 w-9 rounded-md border border-border hover:bg-sage/40 focus:outline-none focus:ring-2 focus:ring-palegold/60" aria-label="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 text-forest">
+        <path fill="currentColor" d="M12 3.172 3.222 9.58a1 1 0 0 0-.222 1.4l.005.006a1 1 0 0 0 1.4.222L12 5.828l7.595 5.38a1 1 0 1 0 1.178-1.622L12 3.172z"/>
+        <path fill="currentColor" d="M5 10.75V19a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-5h2v5a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-8.25l-6-4.25-6 4.25z"/>
+      </svg>
+    </a>
     <ul class="flex gap-5 text-sm">
       {links.map((l) => (
         <li><a class="text-forest/80 hover:text-forest" href={l.href}>{l.label}</a></li>
