@@ -32,7 +32,7 @@ body {
 .nav a:hover { color: #fff; }
 
 .hero { padding: 80px 0; text-align: left; }
-.hero h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.1; margin: 0 0 12px; }
+.hero .display { font-size: clamp(40px, 8vw, 72px); line-height: 1.05; margin: 0 0 12px; text-shadow: 0 0 24px rgba(176,38,255,0.35); }
 .accent { color: var(--accent); }
 .lead { color: var(--muted); font-size: 18px; max-width: 700px; }
 .cta { margin-top: 24px; display: flex; gap: 12px; }
@@ -75,4 +75,16 @@ body {
   .two-col { grid-template-columns: 1fr; }
 }
 
+/* New components */
+.quickfacts { margin: 16px 0 0; padding-left: 18px; color: #d6bcfa; }
+.badges { display: flex; flex-wrap: wrap; gap: 10px; }
+.badge { background: rgba(176, 38, 255, 0.12); color: #e9d5ff; border: 1px solid rgba(176, 38, 255, 0.4); padding: 6px 10px; border-radius: 999px; font-size: 13px; }
+.timeline { display: grid; gap: 20px; }
+.entry { background: var(--panel); border: 1px solid var(--border); padding: 16px; border-radius: 12px; }
+.list { margin: 0; padding-left: 18px; }
+.press { margin: 0; padding-left: 18px; }
+
+/* Reveal animation */
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
