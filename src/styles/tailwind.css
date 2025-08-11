@@ -45,9 +45,11 @@
     500px 500px,
     100px 100px,
     80px 80px;
-  /* Removed float animation to allow pointer-driven transforms */
-  transform: translate3d(calc(var(--mx, 0) * 24px), calc(var(--my, 0) * 24px), 0);
-  transition: transform 180ms ease-out;
+  transform-origin: var(--ox, 50%) var(--oy, 50%);
+  transform: translate3d(calc(var(--mx, 0) * 24px), calc(var(--my, 0) * 24px), 0)
+             rotateX(calc(var(--my, 0) * 3deg))
+             rotateY(calc(var(--mx, 0) * -3deg));
+  transition: transform 140ms ease-out;
   will-change: transform;
 }
 
@@ -74,8 +76,11 @@
       rgba(139, 69, 19, 0.02) 42px
     );
   pointer-events: none;
-  transform: translate3d(calc(var(--mx, 0) * 12px), calc(var(--my, 0) * 12px), 0);
-  transition: transform 220ms ease-out;
+  transform-origin: var(--ox, 50%) var(--oy, 50%);
+  transform: translate3d(calc(var(--mx, 0) * 12px), calc(var(--my, 0) * 12px), 0)
+             rotateX(calc(var(--my, 0) * 1.5deg))
+             rotateY(calc(var(--mx, 0) * -1.5deg));
+  transition: transform 160ms ease-out;
   will-change: transform;
 }
 
@@ -117,9 +122,11 @@
     40px 40px,
     50px 50px,
     30px 30px;
-  /* Removed pulse animation for interactive transforms */
-  transform: translate3d(calc(var(--mx, 0) * 18px), calc(var(--my, 0) * 18px), 0);
-  transition: transform 180ms ease-out;
+  transform-origin: var(--ox, 50%) var(--oy, 50%);
+  transform: translate3d(calc(var(--mx, 0) * 18px), calc(var(--my, 0) * 18px), 0)
+             rotateX(calc(var(--my, 0) * 2.5deg))
+             rotateY(calc(var(--mx, 0) * -2.5deg));
+  transition: transform 140ms ease-out;
   will-change: transform;
 }
 
@@ -150,8 +157,11 @@
     linear-gradient(30deg, transparent 45%, rgba(34, 139, 34, 0.015) 45%, rgba(34, 139, 34, 0.015) 55%, transparent 55%),
     linear-gradient(-30deg, transparent 45%, rgba(212, 175, 55, 0.01) 45%, rgba(212, 175, 55, 0.01) 55%, transparent 55%);
   pointer-events: none;
-  transform: translate3d(calc(var(--mx, 0) * 9px), calc(var(--my, 0) * 9px), 0);
-  transition: transform 220ms ease-out;
+  transform-origin: var(--ox, 50%) var(--oy, 50%);
+  transform: translate3d(calc(var(--mx, 0) * 9px), calc(var(--my, 0) * 9px), 0)
+             rotateX(calc(var(--my, 0) * 1.25deg))
+             rotateY(calc(var(--mx, 0) * -1.25deg));
+  transition: transform 160ms ease-out;
   will-change: transform;
 }
 
@@ -212,9 +222,11 @@
     60px 60px,
     80px 80px,
     40px 40px;
-  /* Removed flow animation for interactive transforms */
-  transform: translate3d(calc(var(--mx, 0) * 22px), calc(var(--my, 0) * 22px), 0);
-  transition: transform 180ms ease-out;
+  transform-origin: var(--ox, 50%) var(--oy, 50%);
+  transform: translate3d(calc(var(--mx, 0) * 22px), calc(var(--my, 0) * 22px), 0)
+             rotateX(calc(var(--my, 0) * 3deg))
+             rotateY(calc(var(--mx, 0) * -3deg));
+  transition: transform 140ms ease-out;
   will-change: transform;
 }
 
@@ -241,9 +253,11 @@
     60px 60px,
     40px 40px,
     45px 45px;
-  /* Removed reverse flow animation for interactive transforms */
-  transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 10px), 0);
-  transition: transform 220ms ease-out;
+  transform-origin: var(--ox, 50%) var(--oy, 50%);
+  transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 10px), 0)
+             rotateX(calc(var(--my, 0) * 1.5deg))
+             rotateY(calc(var(--mx, 0) * -1.5deg));
+  transition: transform 160ms ease-out;
   will-change: transform;
 }
 

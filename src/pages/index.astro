@@ -70,32 +70,53 @@ import Monogram from '../components/Monogram.astro';
 
     <script>
       const sections = Array.from(document.querySelectorAll('[data-reactive-bg]'));
-      const damp = 0.06; // pointer easing
-      const target = { x: 0, y: 0 };
-      const current = new Map();
+      const damp = 0.12; // faster easing for snappier, local feel
+      const states = new Map(sections.map((el) => [el, { x: 0, y: 0, active: false }]))
 
+      function onEnter(e) {
+        const el = e.currentTarget;
+        const s = states.get(el);
+        s.active = true;
+      }
+      function onLeave(e) {
+        const el = e.currentTarget;
+        const s = states.get(el);
+        s.active = false;
+      }
       function onMove(e) {
-        const vpW = window.innerWidth;
-        const vpH = window.innerHeight;
-        const mx = (e.clientX / vpW) * 2 - 1; // -1..1
-        const my = (e.clientY / vpH) * 2 - 1; // -1..1
-        target.x = mx;
-        target.y = my;
+        const el = e.currentTarget;
+        const rect = el.getBoundingClientRect();
+        const rx = (e.clientX - rect.left) / rect.width;  // 0..1
+        const ry = (e.clientY - rect.top) / rect.height;  // 0..1
+        const mx = rx * 2 - 1; // -1..1
+        const my = ry * 2 - 1; // -1..1
+        const s = states.get(el);
+        s.tx = mx;
+        s.ty = my;
+        // set origin near the cursor for localized ripple
+        el.style.setProperty('--ox', `${(rx * 100).toFixed(2)}%`);
+        el.style.setProperty('--oy', `${(ry * 100).toFixed(2)}%`);
       }
 
       function tick() {
         sections.forEach((el) => {
-          const s = current.get(el) || { x: 0, y: 0 };
-          s.x += (target.x - s.x) * damp;
-          s.y += (target.y - s.y) * damp;
+          const s = states.get(el);
+          const targetX = s.active ? s.tx || 0 : 0;
+          const targetY = s.active ? s.ty || 0 : 0;
+          s.x += ((targetX) - s.x) * damp;
+          s.y += ((targetY) - s.y) * damp;
           el.style.setProperty('--mx', s.x.toFixed(4));
           el.style.setProperty('--my', s.y.toFixed(4));
-          current.set(el, s);
         });
         requestAnimationFrame(tick);
       }
 
-      window.addEventListener('pointermove', onMove, { passive: true });
+      sections.forEach((el) => {
+        el.addEventListener('pointerenter', onEnter, { passive: true });
+        el.addEventListener('pointerleave', onLeave, { passive: true });
+        el.addEventListener('pointermove', onMove, { passive: true });
+      });
+
       requestAnimationFrame(tick);
     </script>
   </main>
