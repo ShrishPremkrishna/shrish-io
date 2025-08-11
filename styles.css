@@ -29,7 +29,7 @@ body {
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
 .brand { color: #fff; text-decoration: none; font-weight: 700; letter-spacing: 0.2px; }
 .nav a { color: var(--muted); text-decoration: none; margin-left: 20px; }
-.nav a:hover { color: #fff; }
+.nav a:hover, .nav a.active { color: #fff; text-shadow: 0 0 12px rgba(176, 38, 255, 0.6); }
 
 .hero { padding: 80px 0; text-align: left; }
 .hero .display { font-size: clamp(40px, 8vw, 72px); line-height: 1.05; margin: 0 0 12px; text-shadow: 0 0 24px rgba(176,38,255,0.35); }
