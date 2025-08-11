@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shrish — Personal Website</title>
+    <meta name="description" content="Personal website of Shrish: projects, writing, and contact." />
+    <meta name="theme-color" content="#0f172a" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Shrish — Personal Website" />
+    <meta property="og:description" content="Projects, writing, and ways to get in touch." />
+    <meta property="og:image" content="" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="./">Shrish</a>
+        <nav class="nav">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <h1>Hi, I'm <span class="accent">Shrish</span>.</h1>
+          <p class="lead">I build useful things on the internet — focusing on clean UX, reliable systems, and fast paths from idea to impact.</p>
+          <div class="cta">
+            <a class="button primary" href="#projects">View projects</a>
+            <a class="button" href="#contact">Get in touch</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container two-col">
+          <div>
+            <h2>About</h2>
+            <p>
+              I'm a developer who enjoys turning ideas into polished, production-ready products. I care about
+              performance, maintainable code, and creating delightful user experiences.
+            </p>
+            <p>
+              This site is a lightweight static site hosted on GitHub Pages with no framework build step — simple, fast,
+              and easy to maintain.
+            </p>
+          </div>
+          <div class="card">
+            <h3 class="muted">At a glance</h3>
+            <ul class="checks">
+              <li>Full‑stack web dev</li>
+              <li>Product‑minded</li>
+              <li>Builder of small, sharp tools</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section alt">
+        <div class="container">
+          <h2>Projects</h2>
+          <div class="grid">
+            <article class="project">
+              <h3>Project One</h3>
+              <p>A short description of something you're proud of. What problem does it solve? Who uses it?</p>
+              <div class="project-links">
+                <a href="#">Live demo</a>
+                <a href="#">Source</a>
+              </div>
+            </article>
+            <article class="project">
+              <h3>Project Two</h3>
+              <p>Another project. Keep it concise. Add links when ready.</p>
+              <div class="project-links">
+                <a href="#">Live demo</a>
+                <a href="#">Source</a>
+              </div>
+            </article>
+            <article class="project">
+              <h3>Project Three</h3>
+              <p>Replace with your own work. You can delete or add cards as needed.</p>
+              <div class="project-links">
+                <a href="#">Live demo</a>
+                <a href="#">Source</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <h2>Contact</h2>
+          <p>Best ways to reach me:</p>
+          <ul class="contact-list">
+            <li>
+              <a href="mailto:hello@your-domain.com">Email</a>
+            </li>
+            <li>
+              <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>© <span id="year"></span> Shrish</span>
+        <a href="/" class="muted">Home</a>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+  </html>
+
+
