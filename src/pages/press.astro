@@ -1,29 +1,39 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+const items = [
+  { title: 'Pleasanton Weekly — Innovation Awards', url: 'https://www.pleasantonweekly.com/news/2023/11/02/what-a-week-invigorating-innovation-awards-honoring-young-tri-valley-dreammakers-risktakers/' },
+  { title: 'Innovation Tri‑Valley Dreammakers', url: 'https://innovationtrivalley.org/itvlg-news/dreammakers2023' },
+  { title: 'Livermore Vine — Honors Local Teens', url: 'https://www.livermorevine.com/express-newsletter-content/2023/06/10/innovation-tri-valley-leadership-group-honors-local-teens/' },
+  { title: 'EAA Scholarship Winners', url: 'https://engineersalliance.org/eaa-scholarship-winners-announced/' },
+  { title: 'Diablo Magazine — East Bay Youth Eco Leaders', url: 'https://www.diablomag.com/people-style/people/east-bay-youth-eco-leaders/article_804b04f0-f69e-11ee-b899-c7c64108c5f8.html' },
+  { title: 'LVJUSD Climate Education Resolution — Joint Press', url: 'https://quest-science.org/wp-content/uploads/2024/11/11.7.24-LVJUSD-Adopts-Student-Driven-Climate-Change-Resolution-Joint-Press-Release-1.pdf' },
+  { title: 'Independent News — Climate Education Resolution', url: 'https://www.independentnews.com/community/livermore-school-district-adopts-climate-education-resolution/article_22aee4a4-a23a-11ef-8a6b-4768ff6f15e2.html' },
+  { title: 'Livermore Vine — Climate Literacy', url: 'https://www.livermorevine.com/education/2024/12/19/students-lead-lvjusd-toward-climate-literacy/' },
+  { title: 'Independent News — Quest Science Center Event', url: 'https://www.independentnews.com/community/quest-science-center-event-bubble-bonanza-to-draw-visitors-downtown/article_8b7296a2-0e10-11ef-ae41-dbbbeab6cb3e.html' },
+  { title: 'Presswire — Innovation Tri‑Valley', url: 'https://fox59.com/business/press-releases/ein-presswire/630276121/tri-valley-teens-driving-real-world-solutions-to-be-honored-by-innovation-tri-valley-leadership-group/' },
+  { title: 'Patch — Tri‑Valley Climate Action Youth', url: 'https://patch.com/california/livermore/livermore-students-found-tri-valley-climate-action-youth-program' },
+  { title: 'iResearch Institute — 2022 Highlights', url: 'https://www.iresearchinstitute.com/iresearch-institute-2022-highlights' },
+  { title: 'Princeton — Climate Storytellers', url: 'https://environment.princeton.edu/climate-storytellers-summit/speakers/' },
+  { title: 'ADS — AGU Abstract', url: 'https://ui.adsabs.harvard.edu/abs/2023AGUFMED41C0889G/abstract' },
+  { title: 'AGU — Author Profile', url: 'https://agu.confex.com/agu/fm23/meetingapp.cgi/Person/1419796' },
+  { title: 'LVJUSD — Agenda Attachment', url: 'https://esb.lvjusd.k12.ca.us/Attachments/114188d1-5fb6-4e31-af21-38a18baca9db.pdf' },
+];
 ---
 <Base title="Press — Shrish">
   <Nav />
   <main class="max-w-6xl mx-auto px-4 py-12">
     <h1 class="font-display text-4xl text-forest">Press & Mentions</h1>
-    <p class="mt-3 text-forest/80">All press links included; images and summaries will be auto-fetched server-side in CI and cached locally. For now, placeholders are shown.</p>
+    <p class="mt-3 text-forest/80">Images and summaries will be enriched via CI. Below are live links:</p>
     <ul class="mt-6 grid md:grid-cols-2 gap-6">
-      <li class="p-5 rounded-lg bg-ivory border border-border">Pleasanton Weekly — Innovation Awards</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Innovation Tri‑Valley Dreammakers</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Livermore Vine — Honors Local Teens</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">EAA Scholarship Winners</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Diablo Magazine — East Bay Youth Eco Leaders</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">LVJUSD Climate Education Resolution — Joint Press</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Independent News — Climate Education Resolution</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Livermore Vine — Climate Literacy</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Independent News — Quest Science Center Event</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Presswire — Innovation Tri‑Valley</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Patch — Tri‑Valley Climate Action Youth</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">iResearch Institute — 2022 Highlights</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">Princeton — Climate Storytellers</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">ADS — AGU Abstract</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">AGU — Author Profile</li>
-      <li class="p-5 rounded-lg bg-ivory border border-border">LVJUSD — Agenda Attachment</li>
+      {items.map((item) => (
+        <li>
+          <a href={item.url} target="_blank" rel="noopener" class="block p-5 rounded-lg bg-ivory border border-border hover:shadow-soft hover:bg-sage/30">
+            <span class="text-forest">{item.title}</span>
+            <span class="block mt-2 text-sm text-forest/60">Open article ↗</span>
+          </a>
+        </li>
+      ))}
     </ul>
   </main>
 </Base>
