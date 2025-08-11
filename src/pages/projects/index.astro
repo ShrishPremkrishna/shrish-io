@@ -2,27 +2,147 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 
-const ordered = [
-  'beatify',
-  'arnold',
-  'wendy',
-  'shitpost-startups',
-  'heat-mapping-pipeline',
-  'smartsort',
-  'alzheimers-dl',
-  'shoe-stacker',
+const projects = [
+  {
+    slug: 'beatify',
+    title: 'Beatify',
+    summary: 'Social network for producers to submit beats directly to artists with AI personalization.',
+    bullets: [
+      'Built full-stack web app (React, Node.js) with user auth, messaging, posting, and commenting.',
+      'Implemented AI recommendation model that learns artist beat preferences.',
+      'Ranked Top 10 in OutsideLLMs Hackathon (Official Hackathon of Outside Lands).',
+      'Impact: Enables targeted beat submissions, bypassing industry gatekeeping.',
+    ],
+    link: 'https://Beatify1.lovable.app',
+  },
+  {
+    slug: 'arnold',
+    title: 'Arnold — AI Personal Trainer',
+    summary: 'AI personal trainer voice agent with real-time fitness tracking.',
+    bullets: [
+      'Developed voice-first AI agent using OpenAI Agent SDK, BrightData, NLX, and MongoDB.',
+      'Logged meals, tracked nutrition, and generated custom workouts on demand.',
+      'Placed 2nd in BrightData track & 3rd in NLX track (MCP AWS Enterprise Agents Challenge).',
+      'Delivered working MVP within hackathon constraints, integrating multi-API data pipelines.',
+    ],
+  },
+  {
+    slug: 'wendy',
+    title: 'Wendy — AI Wedding Planner',
+    summary: 'AI-powered wedding planner with vendor coordination and guest list automation.',
+    bullets: [
+      'Built full MCP Client + Server architecture for multi-step event planning.',
+      'Automated vendor/venue communication, RSVP tracking, and calendar scheduling.',
+      'Achieved Judges Award in MCP & Agents Hackathon (13 teams).',
+      'Tech: Custom MCP protocols, React, Node.js, real-time dashboards.',
+    ],
+  },
+  {
+    slug: 'shitpost-startups',
+    title: 'Shitpost Startups (Passive Income Generator)',
+    summary: 'Fully automated viral product creation pipeline.',
+    bullets: [
+      'Scraped trending news, generated product ideas, designed assets, and deployed purchasable websites.',
+      'Completed 0–100 build pipeline in under 2 hours using Buildship, Cloudflare Workers, and ElevenLabs voice tools.',
+      'Won 1st Place at AI Hackathon (125 participants).',
+    ],
+  },
+  {
+    slug: 'heat-mapping-pipeline',
+    title: 'Heat Mapping Pipeline',
+    summary: 'Low-cost urban heat island monitoring system.',
+    bullets: [
+      'Engineered $70 mobile sensor + Swift app replacing $10K+ commercial solutions.',
+      'Led 25-person team, collecting 10K+ geotagged temperature points across Livermore.',
+      'Adopted by 40+ students; informed city decisions on cooling infrastructure.',
+      'Tech: Swift, Arduino, Data Science, ArcGIS.',
+    ],
+  },
+  {
+    slug: 'smartsort',
+    title: 'SmartSort',
+    summary: 'AI waste audit app for public-site trash classification.',
+    bullets: [
+      'Built React Native app using Gemini API with 93% classification accuracy.',
+      'Deployed in 2 schools (30+ users), cutting waste audit time by 2 hours/session.',
+      'Won $1K sustainability scholarship; partnered with LVJUSD + StopWaste.',
+    ],
+  },
+  {
+    slug: 'alzheimers-dl',
+    title: 'Alzheimer’s DL',
+    summary: 'Deep learning model for early Alzheimer’s detection.',
+    bullets: [
+      'Trained model on 8K biomedical samples to achieve 95% accuracy.',
+      'Combined proteomic + genomic data using bioinformatics pipelines.',
+      'Earned Director’s Award at regional science fair.',
+      'Tech: Python, TensorFlow, bioinformatics tools.',
+    ],
+  },
+  {
+    slug: 'shoe-stacker',
+    title: 'Shoe Stacker',
+    summary: 'Autonomous shoe sorting robot with AI vision.',
+    bullets: [
+      'Programmed 3 CNNs on Edge Impulse for real-time detection/classification (85–95% accuracy).',
+      'Deployed on Arduino hardware; completed pick–stack cycle in <90 seconds.',
+      'Advanced to California Science Fair.',
+    ],
+  },
 ];
 ---
 <Base title="Projects — Shrish">
   <Nav />
   <main class="max-w-6xl mx-auto px-4 py-12">
     <h1 class="font-display text-4xl text-forest">Projects</h1>
-    <p class="mt-3 text-forest/80">Case studies with placeholders; links to be added later.</p>
+    <p class="mt-3 text-forest/80">Click any project to expand for details. Use the case‑study link for a dedicated page.</p>
+
     <ul class="mt-6 grid md:grid-cols-2 gap-6">
-      {ordered.map((slug) => (
-        <li class="p-5 rounded-lg bg-ivory border border-border hover:shadow-soft"><a href={`/projects/${slug}`} class="text-forest">{slug.replaceAll('-', ' ')}</a></li>
+      {projects.map((p) => (
+        <li class="group">
+          <button class="w-full text-left p-5 rounded-lg bg-ivory border border-border hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-palegold/60"
+                  aria-expanded="false" data-accordion-trigger={p.slug}>
+            <div class="flex items-center justify-between">
+              <span class="text-forest font-medium">{p.title.toLowerCase()}</span>
+              <svg class="ml-3 h-5 w-5 text-forest/70 transition-transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.08 1.04l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </div>
+            <p class="mt-1 text-forest/80">{p.summary}</p>
+          </button>
+          <div class="transition-all overflow-hidden max-h-0" data-accordion-panel={p.slug}>
+            <div class="px-5 pb-5 pt-2 bg-sage/30 border-x border-b border-border rounded-b-lg">
+              <ul class="list-disc pl-5 text-forest/80 space-y-1">
+                {p.bullets.map((b) => (<li>{b}</li>))}
+              </ul>
+              <div class="mt-3 flex gap-3 text-sm">
+                <a href={`/projects/${p.slug}`} class="underline underline-offset-4 text-forest">View case study</a>
+                {p.link && (<a href={p.link} target="_blank" rel="noopener" class="underline underline-offset-4 text-forest/80">Open demo ↗</a>)}
+              </div>
+            </div>
+          </div>
+        </li>
       ))}
     </ul>
+
+    <script>
+      const triggers = document.querySelectorAll('[data-accordion-trigger]');
+      triggers.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const slug = btn.getAttribute('data-accordion-trigger');
+          const panel = document.querySelector(`[data-accordion-panel="${slug}"]`);
+          const icon = btn.querySelector('svg');
+          const open = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!open));
+          if (!panel) return;
+          if (open) {
+            panel.style.maxHeight = '0px';
+            icon && (icon.style.transform = 'rotate(0deg)');
+          } else {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            icon && (icon.style.transform = 'rotate(180deg)');
+          }
+        });
+      });
+    </script>
   </main>
 </Base>
 
