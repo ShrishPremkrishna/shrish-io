@@ -124,19 +124,42 @@ const projects = [
     </ul>
 
     <script>
-      const triggers = document.querySelectorAll('[data-accordion-trigger]');
+      const triggers = Array.from(document.querySelectorAll('[data-accordion-trigger]'));
+      const panels = Array.from(document.querySelectorAll('[data-accordion-panel]'));
+
+      function closeAll(exceptSlug = '') {
+        triggers.forEach((t) => {
+          const s = t.getAttribute('data-accordion-trigger');
+          if (s !== exceptSlug) {
+            t.setAttribute('aria-expanded', 'false');
+            const ic = t.querySelector('svg');
+            ic && (ic.style.transform = 'rotate(0deg)');
+          }
+        });
+        panels.forEach((p) => {
+          const s = p.getAttribute('data-accordion-panel');
+          if (s !== exceptSlug) p.style.maxHeight = '0px';
+        });
+      }
+
       triggers.forEach((btn) => {
         btn.addEventListener('click', () => {
           const slug = btn.getAttribute('data-accordion-trigger');
           const panel = document.querySelector(`[data-accordion-panel="${slug}"]`);
           const icon = btn.querySelector('svg');
-          const open = btn.getAttribute('aria-expanded') === 'true';
-          btn.setAttribute('aria-expanded', String(!open));
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
           if (!panel) return;
-          if (open) {
+
+          if (isOpen) {
+            // close current
+            btn.setAttribute('aria-expanded', 'false');
             panel.style.maxHeight = '0px';
             icon && (icon.style.transform = 'rotate(0deg)');
           } else {
+            // open current and close others
+            closeAll(slug);
+            btn.setAttribute('aria-expanded', 'true');
             panel.style.maxHeight = panel.scrollHeight + 'px';
             icon && (icon.style.transform = 'rotate(180deg)');
           }
