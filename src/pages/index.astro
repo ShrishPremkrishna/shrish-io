@@ -69,55 +69,145 @@ import Monogram from '../components/Monogram.astro';
     </section>
 
     <script>
-      const sections = Array.from(document.querySelectorAll('[data-reactive-bg]'));
-      const damp = 0.12; // faster easing for snappier, local feel
-      const states = new Map(sections.map((el) => [el, { x: 0, y: 0, active: false }]))
+      const sections = document.querySelectorAll('[data-reactive-bg]');
+      const damp = 0.12; // Easing factor for background parallax
+      const stiffness = 0.12; // Spring stiffness for shapes
+      const damping = 0.88; // Slightly reduced damping for more fluidity
 
-      function onEnter(e) {
-        const el = e.currentTarget;
-        const s = states.get(el);
-        s.active = true;
-      }
-      function onLeave(e) {
-        const el = e.currentTarget;
-        const s = states.get(el);
-        s.active = false;
-      }
-      function onMove(e) {
-        const el = e.currentTarget;
-        const rect = el.getBoundingClientRect();
-        const rx = (e.clientX - rect.left) / rect.width;  // 0..1
-        const ry = (e.clientY - rect.top) / rect.height;  // 0..1
-        const mx = rx * 2 - 1; // -1..1
-        const my = ry * 2 - 1; // -1..1
-        const s = states.get(el);
-        s.tx = mx;
-        s.ty = my;
-        // set origin near the cursor for localized ripple
-        el.style.setProperty('--ox', `${(rx * 100).toFixed(2)}%`);
-        el.style.setProperty('--oy', `${(ry * 100).toFixed(2)}%`);
-      }
+      sections.forEach(section => {
+        let targetX = 0;
+        let targetY = 0;
+        let currentX = 0;
+        let currentY = 0;
+        let animationFrameId;
 
-      function tick() {
-        sections.forEach((el) => {
-          const s = states.get(el);
-          const targetX = s.active ? s.tx || 0 : 0;
-          const targetY = s.active ? s.ty || 0 : 0;
-          s.x += ((targetX) - s.x) * damp;
-          s.y += ((targetY) - s.y) * damp;
-          el.style.setProperty('--mx', s.x.toFixed(4));
-          el.style.setProperty('--my', s.y.toFixed(4));
+        const shapes = [];
+        const colors = ['gold', 'green', 'bronze']; // Use CSS classes instead of hex colors
+        
+        // Customize shapes based on panel type
+        let kinds;
+        if (section.classList.contains('geometric-pattern-experience')) {
+          kinds = ['hexagon', 'hexagon', 'hexagon']; // Experience panel: mostly hexagons
+        } else if (section.classList.contains('geometric-pattern-about')) {
+          kinds = ['hexagon', 'triangle', 'hexagon']; // About panel: hexagons and triangles
+        } else {
+          kinds = ['orb', 'diamond', 'orb']; // Hero panel: orbs and diamonds
+        }
+
+        function spawnShapes(container, count) {
+          for (let i = 0; i < count; i++) {
+            const shape = document.createElement('div');
+            const size = Math.random() * 20 + 10; // 10-30px
+            shape.className = `shape ${kinds[Math.floor(Math.random() * kinds.length)]} ${colors[Math.floor(Math.random() * colors.length)]}`;
+            shape.style.width = `${size}px`;
+            shape.style.height = `${size}px`;
+            shape.style.left = `${Math.random() * 100}%`;
+            shape.style.top = `${Math.random() * 100}%`;
+            shape.vx = 0; // velocity x
+            shape.vy = 0; // velocity y
+            shape.px = parseFloat(shape.style.left); // current position x
+            shape.py = parseFloat(shape.style.top); // current position y
+            shape.originalPx = shape.px; // store original position
+            shape.originalPy = shape.py;
+            container.appendChild(shape);
+            shapes.push(shape);
+          }
+        }
+
+        const shapesOverlay = document.createElement('div');
+        shapesOverlay.className = 'absolute inset-0 z-20 pointer-events-none';
+        section.appendChild(shapesOverlay);
+        spawnShapes(shapesOverlay, 35); // Increased to 35 shapes per section
+
+        section.addEventListener('pointermove', (e) => {
+          const rect = section.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          targetX = (x / rect.width - 0.5) * 2; // -1 to 1
+          targetY = (y / rect.height - 0.5) * 2; // -1 to 1
+
+          section.style.setProperty('--ox', `${x}px`);
+          section.style.setProperty('--oy', `${y}px`);
+
+          // Store current mouse position for shape animation
+          section.currentMouseX = e.clientX;
+          section.currentMouseY = e.clientY;
+
+          if (!animationFrameId) {
+            animationFrameId = requestAnimationFrame(animate);
+          }
         });
-        requestAnimationFrame(tick);
-      }
 
-      sections.forEach((el) => {
-        el.addEventListener('pointerenter', onEnter, { passive: true });
-        el.addEventListener('pointerleave', onLeave, { passive: true });
-        el.addEventListener('pointermove', onMove, { passive: true });
+        section.addEventListener('pointerleave', () => {
+          targetX = 0;
+          targetY = 0;
+          // Reset all shape velocities when leaving to prevent circular motion
+          shapes.forEach(shape => {
+            shape.vx *= 0.3; // More aggressive velocity reduction
+            shape.vy *= 0.3;
+          });
+        });
+
+        function animate() {
+          currentX += (targetX - currentX) * damp;
+          currentY += (targetY - currentY) * damp;
+
+          section.style.setProperty('--mx', `${currentX.toFixed(2)}`);
+          section.style.setProperty('--my', `${currentY.toFixed(2)}`);
+
+          shapes.forEach(shape => {
+            const shapeRect = shape.getBoundingClientRect();
+            const sectionRect = section.getBoundingClientRect();
+            const shapeCenterX = shapeRect.left + shapeRect.width / 2 - sectionRect.left;
+            const shapeCenterY = shapeRect.top + shapeRect.height / 2 - sectionRect.top;
+
+            const dx = section.currentMouseX - sectionRect.left - shapeCenterX;
+            const dy = section.currentMouseY - sectionRect.top - shapeCenterY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            const strength = 120; // Increased influence radius for more responsive feel
+            if (dist < strength) {
+              const force = (1 - dist / strength) * 0.9; // Increased force multiplier for more satisfying movement
+              const angle = Math.atan2(dy, dx);
+              const fx = Math.cos(angle) * force * 4; // Increased movement amplitude
+              const fy = Math.sin(angle) * force * 4;
+
+              shape.vx += fx;
+              shape.vy += fy;
+            }
+
+            // Apply spring physics with better damping
+            shape.vx *= damping;
+            shape.vy *= damping;
+            
+            // Add a gentler return-to-origin force that only activates when far from origin
+            const distanceFromOrigin = Math.sqrt(
+              Math.pow(shape.px - shape.originalPx, 2) + 
+              Math.pow(shape.py - shape.originalPy, 2)
+            );
+            
+            // Only apply return force if shape is significantly displaced
+            if (distanceFromOrigin > 5) {
+              const returnForce = 0.04; // Gentler return force
+              const adaptiveReturnForce = returnForce * (distanceFromOrigin * 0.005);
+              shape.vx += (shape.originalPx - shape.px) * adaptiveReturnForce;
+              shape.vy += (shape.originalPy - shape.py) * adaptiveReturnForce;
+            }
+            
+            shape.px += shape.vx;
+            shape.py += shape.vy;
+
+            shape.style.transform = `translate3d(${shape.px - shape.originalPx}px, ${shape.py - shape.originalPy}px, 0) scale(${1 + Math.abs(shape.vx) * 0.04 + Math.abs(shape.vy) * 0.04})`; // Slightly increased scale effect
+          });
+
+          if (Math.abs(targetX - currentX) > 0.001 || Math.abs(targetY - currentY) > 0.001 || shapes.some(s => Math.abs(s.vx) > 0.001 || Math.abs(s.vy) > 0.001)) {
+            animationFrameId = requestAnimationFrame(animate);
+          } else {
+            animationFrameId = null;
+          }
+        }
       });
-
-      requestAnimationFrame(tick);
     </script>
   </main>
 </Base>
