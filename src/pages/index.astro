@@ -7,6 +7,7 @@ import Monogram from '../components/Monogram.astro';
   <Nav />
   <main>
     <section class="relative geometric-pattern overflow-hidden" data-reactive-bg>
+      <div class="shapes" aria-hidden="true"></div>
       <div class="max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center relative z-10">
         <div>
           <h1 class="font-display text-5xl md:text-6xl leading-tight text-forest">Shrish Premkrishna</h1>
@@ -24,6 +25,7 @@ import Monogram from '../components/Monogram.astro';
     </section>
 
     <section id="about" class="border-t border-border geometric-pattern-about relative overflow-hidden" data-reactive-bg>
+      <div class="shapes" aria-hidden="true"></div>
       <div class="max-w-6xl mx-auto px-4 py-12 relative z-10">
         <h2 class="font-display text-3xl text-forest">About</h2>
         <h3 class="mt-3 font-display text-xl text-forest">CS @ Stanford w/ AI Track</h3>
@@ -37,6 +39,7 @@ import Monogram from '../components/Monogram.astro';
     </section>
 
     <section id="experience" class="border-t border-border geometric-pattern-experience relative overflow-hidden" data-reactive-bg>
+      <div class="shapes" aria-hidden="true"></div>
       <div class="max-w-6xl mx-auto px-4 py-12 grid gap-6 relative z-10">
         <h2 class="font-display text-3xl text-forest">Experience</h2>
         <div class="p-5 rounded-lg bg-sage/40 border border-border">
@@ -70,54 +73,78 @@ import Monogram from '../components/Monogram.astro';
 
     <script>
       const sections = Array.from(document.querySelectorAll('[data-reactive-bg]'));
-      const damp = 0.12; // faster easing for snappier, local feel
-      const states = new Map(sections.map((el) => [el, { x: 0, y: 0, active: false }]))
 
-      function onEnter(e) {
-        const el = e.currentTarget;
-        const s = states.get(el);
-        s.active = true;
-      }
-      function onLeave(e) {
-        const el = e.currentTarget;
-        const s = states.get(el);
-        s.active = false;
-      }
-      function onMove(e) {
-        const el = e.currentTarget;
-        const rect = el.getBoundingClientRect();
-        const rx = (e.clientX - rect.left) / rect.width;  // 0..1
-        const ry = (e.clientY - rect.top) / rect.height;  // 0..1
-        const mx = rx * 2 - 1; // -1..1
-        const my = ry * 2 - 1; // -1..1
-        const s = states.get(el);
-        s.tx = mx;
-        s.ty = my;
-        // set origin near the cursor for localized ripple
-        el.style.setProperty('--ox', `${(rx * 100).toFixed(2)}%`);
-        el.style.setProperty('--oy', `${(ry * 100).toFixed(2)}%`);
+      function spawnShapes(container, count = 10) {
+        const colors = ['gold','green','bronze'];
+        const kinds = ['orb','diamond','triangle'];
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < count; i++) {
+          const el = document.createElement('span');
+          const size = 16 + Math.random() * 36; // 16..52
+          const x = Math.random() * 100;
+          const y = Math.random() * 100;
+          el.className = `shape ${kinds[i % kinds.length]} ${colors[i % colors.length]}`;
+          el.style.width = `${size}px`;
+          el.style.height = `${size}px`;
+          el.style.left = `${x}%`;
+          el.style.top = `${y}%`;
+          el.dataset.vx = '0';
+          el.dataset.vy = '0';
+          frag.appendChild(el);
+        }
+        container.appendChild(frag);
       }
 
-      function tick() {
-        sections.forEach((el) => {
-          const s = states.get(el);
-          const targetX = s.active ? s.tx || 0 : 0;
-          const targetY = s.active ? s.ty || 0 : 0;
-          s.x += ((targetX) - s.x) * damp;
-          s.y += ((targetY) - s.y) * damp;
-          el.style.setProperty('--mx', s.x.toFixed(4));
-          el.style.setProperty('--my', s.y.toFixed(4));
-        });
-        requestAnimationFrame(tick);
-      }
+      sections.forEach((panel) => {
+        const layer = panel.querySelector('.shapes');
+        spawnShapes(layer, 12);
 
-      sections.forEach((el) => {
-        el.addEventListener('pointerenter', onEnter, { passive: true });
-        el.addEventListener('pointerleave', onLeave, { passive: true });
-        el.addEventListener('pointermove', onMove, { passive: true });
+        let mx = 0, my = 0; // target
+        const strength = 120; // px influence radius
+        const stiffness = 0.12;
+        const damping = 0.86;
+
+        function onMove(e) {
+          const r = panel.getBoundingClientRect();
+          mx = e.clientX - r.left;
+          my = e.clientY - r.top;
+          const ox = ((mx / r.width) * 100).toFixed(2) + '%';
+          const oy = ((my / r.height) * 100).toFixed(2) + '%';
+          panel.style.setProperty('--ox', ox);
+          panel.style.setProperty('--oy', oy);
+          // also update section-level variables for base parallax
+          panel.style.setProperty('--mx', ((mx / r.width) * 2 - 1).toFixed(4));
+          panel.style.setProperty('--my', ((my / r.height) * 2 - 1).toFixed(4));
+        }
+
+        function step() {
+          const r = panel.getBoundingClientRect();
+          const shapes = layer.children;
+          for (let i = 0; i < shapes.length; i++) {
+            const s = shapes[i];
+            const sx = s.offsetLeft + s.offsetWidth / 2;
+            const sy = s.offsetTop + s.offsetHeight / 2;
+            const dx = mx - sx;
+            const dy = my - sy;
+            const dist = Math.hypot(dx, dy) || 1;
+            const influence = Math.max(0, 1 - dist / strength); // 0..1
+            // spring impulse toward/away from cursor
+            const fx = (dx / dist) * influence * 6; // force
+            const fy = (dy / dist) * influence * 6;
+            let vx = parseFloat(s.dataset.vx) || 0;
+            let vy = parseFloat(s.dataset.vy) || 0;
+            vx = vx * damping + fx * stiffness;
+            vy = vy * damping + fy * stiffness;
+            s.dataset.vx = String(vx);
+            s.dataset.vy = String(vy);
+            s.style.transform = `translate3d(${vx * 12}px, ${vy * 12}px, 0)`;
+          }
+          requestAnimationFrame(step);
+        }
+
+        panel.addEventListener('pointermove', onMove, { passive: true });
+        requestAnimationFrame(step);
       });
-
-      requestAnimationFrame(tick);
     </script>
   </main>
 </Base>
