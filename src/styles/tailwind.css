@@ -177,4 +177,113 @@
   }
 }
 
+/* Experience Section Geometric Pattern */
+.geometric-pattern-experience {
+  position: relative;
+  background: linear-gradient(135deg, #F7F3E7 0%, #E8F5E8 30%, #F0F8F0 70%, #F7F3E7 100%);
+}
+
+.geometric-pattern-experience::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    /* Flowing organic shapes */
+    radial-gradient(ellipse at 30% 20%, rgba(212, 175, 55, 0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 80%, rgba(139, 69, 19, 0.08) 0%, transparent 35%),
+    radial-gradient(ellipse at 20% 70%, rgba(34, 139, 34, 0.06) 0%, transparent 30%),
+    radial-gradient(ellipse at 80% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 25%),
+    /* Connecting lines */
+    linear-gradient(45deg, transparent 35%, rgba(139, 69, 19, 0.04) 35%, rgba(139, 69, 19, 0.04) 65%, transparent 65%),
+    linear-gradient(-45deg, transparent 35%, rgba(34, 139, 34, 0.03) 35%, rgba(34, 139, 34, 0.03) 65%, transparent 65%),
+    /* Wave patterns */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(212, 175, 55, 0.02) 80px,
+      rgba(212, 175, 55, 0.02) 85px,
+      transparent 85px,
+      transparent 120px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(139, 69, 19, 0.015) 80px,
+      rgba(139, 69, 19, 0.015) 85px,
+      transparent 85px,
+      transparent 120px
+    ),
+    /* Dotted connection paths */
+    radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.06) 2px, transparent 2px),
+    radial-gradient(circle at 85% 85%, rgba(139, 69, 19, 0.04) 2px, transparent 2px),
+    radial-gradient(circle at 50% 50%, rgba(34, 139, 34, 0.03) 1.5px, transparent 1.5px);
+  background-size: 
+    200px 150px,
+    180px 120px,
+    160px 100px,
+    140px 90px,
+    100px 100px,
+    120px 120px,
+    200px 200px,
+    200px 200px,
+    60px 60px,
+    80px 80px,
+    40px 40px;
+  animation: experience-geometric-flow 18s ease-in-out infinite;
+}
+
+.geometric-pattern-experience::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    /* Flowing curves */
+    radial-gradient(ellipse at 25% 75%, transparent 0%, rgba(212, 175, 55, 0.02) 20%, transparent 40%),
+    radial-gradient(ellipse at 75% 25%, transparent 0%, rgba(34, 139, 34, 0.015) 20%, transparent 40%),
+    /* Connection dots */
+    radial-gradient(circle at 10% 90%, rgba(139, 69, 19, 0.03) 1px, transparent 1px),
+    radial-gradient(circle at 90% 10%, rgba(212, 175, 55, 0.025) 1px, transparent 1px),
+    radial-gradient(circle at 30% 60%, rgba(34, 139, 34, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at 70% 40%, rgba(139, 69, 19, 0.02) 1px, transparent 1px);
+  background-size: 
+    300px 200px,
+    250px 150px,
+    50px 50px,
+    60px 60px,
+    40px 40px,
+    45px 45px;
+  animation: experience-geometric-flow 18s ease-in-out infinite reverse;
+}
+
+@keyframes experience-geometric-flow {
+  0%, 100% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+    opacity: 0.7;
+  }
+  20% {
+    transform: translateX(-5px) translateY(-8px) rotate(1deg);
+    opacity: 0.9;
+  }
+  40% {
+    transform: translateX(8px) translateY(-3px) rotate(-0.5deg);
+    opacity: 0.8;
+  }
+  60% {
+    transform: translateX(-3px) translateY(5px) rotate(0.5deg);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(5px) translateY(-2px) rotate(-1deg);
+    opacity: 0.85;
+  }
+}
+
 
